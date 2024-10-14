@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/producto")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class ProductoControlador {
 
     private final ProductoServicio productoServicio;
