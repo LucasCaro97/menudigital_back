@@ -26,14 +26,14 @@ public class MenudigitalApplication {
 	@Value("${usuario.pass}")
 	private String usuarioPass;
 
-	private PasswordEncoder passwordEncoder;
+	;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MenudigitalApplication.class, args);
 	}
 
 	@Bean
-	CommandLineRunner init(UsuarioRepositorio usuarioRepositorio, RolesRepositorio rolesRepositorio, PermisosRepositorio permisosRepositorio){
+	CommandLineRunner init(UsuarioRepositorio usuarioRepositorio, RolesRepositorio rolesRepositorio, PermisosRepositorio permisosRepositorio, PasswordEncoder passwordEncoder){
 		return args -> {
 
 			/*CREAR PERMISOS*/

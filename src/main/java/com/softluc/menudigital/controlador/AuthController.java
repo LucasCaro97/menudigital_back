@@ -23,6 +23,7 @@ public class AuthController {
         try{
             return new ResponseEntity<>(this.userDetailServiceImp.loginUser(userRequest), HttpStatus.OK);
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
