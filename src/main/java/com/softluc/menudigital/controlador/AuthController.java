@@ -21,11 +21,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthLoginRequst userRequest){
         try{
-            System.out.println(userRequest);
-
             return new ResponseEntity<>(this.userDetailServiceImp.loginUser(userRequest), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
