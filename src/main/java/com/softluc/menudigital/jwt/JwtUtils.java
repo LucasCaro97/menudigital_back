@@ -9,6 +9,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -72,5 +73,6 @@ public class JwtUtils {
     public Map<String, Claim> returnAllClaims(DecodedJWT decodedJWT){
         return decodedJWT.getClaims();
     }
+
 
 }

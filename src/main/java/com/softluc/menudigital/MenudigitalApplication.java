@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,11 @@ public class MenudigitalApplication {
 
 	@Value("${usuario.root}")
 	private String usuarioRoot;
+
+	@Value("${usuario.pass}")
+	private String usuarioPass;
+
+	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MenudigitalApplication.class, args);
@@ -72,7 +78,7 @@ public class MenudigitalApplication {
 			/*USER CREATE*/
 			Usuario usuario = Usuario.builder()
 					.nombre(usuarioRoot)
-					.password("$2a$10$Fet.w4zJ6pg4c4KmvfG1jeZXbq2U2AW.hpTaZNdwftgOYH1FhaL1W")
+					.password(passwordEncoder.encode(usuarioPass))
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)
