@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.softluc</groupId>
 	<artifactId>menudigital</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>menudigital</name>
 	<description>Menu digital para restaurant</description>
 	<url/>
