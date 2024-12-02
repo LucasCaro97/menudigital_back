@@ -39,13 +39,17 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(http ->{
                     //Config los end publicos
-                    http.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
-                    http.requestMatchers(HttpMethod.GET, "/producto").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/producto/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/categoria").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/images/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/plan").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/provincia").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/localidad/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/usuario/**").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
 
                     //Config los end priv
-                    http.requestMatchers(HttpMethod.POST, "/auth/register").hasAnyRole("ADMIN", "DEVELOPER");
                     http.anyRequest().authenticated();
                 })
                 .cors( cors -> cors.configurationSource(corsConfigurationSource()))

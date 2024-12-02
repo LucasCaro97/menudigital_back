@@ -50,9 +50,10 @@ public class ProductoControlador {
                                     @RequestParam("categoria") Long categoria,
                                     @RequestParam("descripcion") String descripcion,
                                     @RequestParam("precio") BigDecimal precio,
-                                    @RequestParam(value = "imagen", required = false) MultipartFile[] listaImagenes){
+                                    @RequestParam(value = "imagen", required = false) MultipartFile[] listaImagenes,
+                                    @RequestParam("idUsuario") Long idUsuario){
         try{
-            Producto producto = productoServicio.crear(new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes));
+            Producto producto = productoServicio.crear(new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes, idUsuario));
             return ResponseEntity.ok(producto);
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
@@ -64,9 +65,10 @@ public class ProductoControlador {
                                     @RequestParam("categoria") Long categoria,
                                     @RequestParam("descripcion") String descripcion,
                                     @RequestParam("precio") BigDecimal precio,
-                                    @RequestParam(value = "imagen", required = false) MultipartFile[] listaImagenes){
+                                    @RequestParam(value = "imagen", required = false) MultipartFile[] listaImagenes,
+                                    @RequestParam("idUsuario") Long idUsuario){
         try{
-            Producto producto = productoServicio.editar(id, new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes));
+            Producto producto = productoServicio.editar(id, new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes, idUsuario));
             return ResponseEntity.ok(producto);
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
@@ -96,6 +98,16 @@ public class ProductoControlador {
             return ResponseEntity.internalServerError().body("Error al eliminar la imagen");
         }
 
+    }
+
+    @GetMapping("/getAll/{idUser}")
+    public ResponseEntity<?> getAllByUser(@PathVariable Long idUser){
+        try{
+            List<Producto> productoList = productoServicio.obtenerPorUsuario(idUser);
+            return ResponseEntity.ok(productoList);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
 

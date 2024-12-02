@@ -16,4 +16,6 @@ public interface IProductoServicio {
 
 
     Producto actualizarImagenes(Long id, List<String> nuevaListaImg);
+
+    List<Producto> obtenerPorUsuario(Long idUser);
 }

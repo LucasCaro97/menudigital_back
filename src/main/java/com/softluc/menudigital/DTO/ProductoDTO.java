@@ -19,6 +19,7 @@ public class ProductoDTO {
     private BigDecimal precio;
     @ElementCollection
     private MultipartFile[] listaImagenes;
+    private Long idUsuario;
 
 
 }

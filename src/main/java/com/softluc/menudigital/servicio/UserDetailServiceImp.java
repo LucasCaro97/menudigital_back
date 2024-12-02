@@ -13,13 +13,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +40,21 @@ public class UserDetailServiceImp implements UserDetailsService {
 
     @Autowired
     private RolesRepositorio rolesRepositorio;
+
+    @Autowired
+    private ImagenServicio imagenServicio;
+
+    @Autowired
+    private PlanServicio planServicio;
+
+    @Autowired
+    private ProvinciaServicio provinciaServicio;
+    @Autowired
+    private LocalidadServicio localidadServicio;
+
+    @Autowired
+    private UserService userService;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -72,7 +85,7 @@ public class UserDetailServiceImp implements UserDetailsService {
 
         Authentication authentication = this.authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String accessToken = jwtUtils.createToken(authentication);
+        String accessToken = jwtUtils.createToken(authentication, userService.obtenerPorNombre(username).getId());
         AuthResponse authResponse = new AuthResponse(username, "Usuario logueado correctamente", accessToken, true);
         return authResponse;
     }
@@ -105,6 +118,13 @@ public class UserDetailServiceImp implements UserDetailsService {
         Usuario usuario = Usuario.builder()
                 .nombre(username)
                 .password(passwordEncoder.encode(password))
+                .razonSocial(authCreateUser.commerceName())
+                .plan(planServicio.obtenerPorId(authCreateUser.plan()))
+                .telefono(authCreateUser.phone())
+                .provincia(provinciaServicio.obtenerPorId(authCreateUser.provincia()))
+                .localidad(localidadServicio.obtenerPorId(authCreateUser.ciudad()))
+                .direccion(authCreateUser.direccion())
+                .logo(authCreateUser.logo() != null ? imagenServicio.almacenarImagen(authCreateUser.logo()) : null )
                 .roles(rolesSet)
                 .isEnabled(true)
                 .accountNoLocked(true)
@@ -121,7 +141,7 @@ public class UserDetailServiceImp implements UserDetailsService {
                 .forEach(permiso -> authorityList.add(new SimpleGrantedAuthority(permiso.getNombre())));
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(usuarioCreado.getNombre(), usuarioCreado.getPassword(), authorityList);
-        String accessToken = jwtUtils.createToken(authentication);
+        String accessToken = jwtUtils.createToken(authentication, usuarioCreado.getId());
         AuthResponse authResponse = new AuthResponse(usuarioCreado.getNombre(), "Usuario creado correctamente", accessToken, true);
         return authResponse;
     }

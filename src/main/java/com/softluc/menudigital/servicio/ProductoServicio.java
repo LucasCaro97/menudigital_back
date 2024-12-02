@@ -2,8 +2,12 @@ package com.softluc.menudigital.servicio;
 
 import com.softluc.menudigital.DTO.ProductoDTO;
 import com.softluc.menudigital.modelo.Producto;
+import com.softluc.menudigital.modelo.Usuario;
 import com.softluc.menudigital.repositorio.ProductoRepositorio;
+import com.softluc.menudigital.repositorio.UsuarioRepositorio;
+import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +21,7 @@ public class ProductoServicio implements  IProductoServicio{
     private final ProductoRepositorio productoRepositorio;
     private final CategoriaServicio categoriaServicio;
     private final ImagenServicio imagenServicio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
     @Override
     @Transactional(readOnly = true)
@@ -47,6 +52,7 @@ public class ProductoServicio implements  IProductoServicio{
             producto.setDescripcion(dto.getDescripcion());
             producto.setPrecio(dto.getPrecio());
             producto.setListaImagenes(imagenServicio.almacenarImagenes(dto.getListaImagenes()));
+            producto.setUsuario(usuarioRepositorio.findById(dto.getIdUsuario()).orElse(null));
             return productoRepositorio.save(producto);
         }catch (Exception e){
             throw new RuntimeException("Error al crear el producto");
@@ -62,6 +68,7 @@ public class ProductoServicio implements  IProductoServicio{
             producto.setDescripcion(dto.getDescripcion());
             producto.setPrecio(dto.getPrecio());
             producto.setListaImagenes(imagenServicio.almacenarImagenes(dto.getListaImagenes(), producto.getListaImagenes()));
+            producto.setUsuario(usuarioRepositorio.findById(dto.getIdUsuario()).orElse(null));
             return productoRepositorio.save(producto);
         }catch (Exception e){
             throw new RuntimeException("Error al editar el producto");
@@ -88,6 +95,16 @@ public class ProductoServicio implements  IProductoServicio{
             return productoRepositorio.save(producto);
         }catch (Exception e){
             throw new RuntimeException("Error al actualizar la imagen");
+        }
+    }
+
+    @Override
+    public List<Producto> obtenerPorUsuario(Long idUser) {
+        try {
+            Usuario usuario = usuarioRepositorio.findById(idUser).orElse(null);
+            return productoRepositorio.findByUsuario(usuario);
+        }catch (Exception e){
+            throw new RuntimeException("Error al obtener los productos por usuario");
         }
     }
 }

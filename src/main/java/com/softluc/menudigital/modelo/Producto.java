@@ -23,4 +23,8 @@ public class Producto {
     @ElementCollection // @ElementCollection genera una tabla extra donde se almacenan los valores de los nombres de las imagenes con una clave foranea de dicho producto.
     private List<String> listaImagenes;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario")
+    private Usuario usuario;
+
 }

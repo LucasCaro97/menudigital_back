@@ -19,6 +19,20 @@ public class Usuario {
     private Long id;
     private String nombre;
     private String password;
+    @ManyToOne
+    @JoinColumn(name = "fk_provincia")
+    private Provincia provincia;
+    @ManyToOne
+    @JoinColumn(name = "fk_localidad")
+    private Localidad localidad;
+    private String direccion;
+    private String logo;
+    private String razonSocial;
+    private Long telefono;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_plan")
+    private Plan plan;
     @Column(name = "is_enabled")
     private boolean isEnabled;
     @Column(name = "account_no_expired")
