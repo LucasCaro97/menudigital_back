@@ -1,6 +1,7 @@
 package com.softluc.menudigital.servicio;
 
 import com.softluc.menudigital.DTO.ProductoDTO;
+import com.softluc.menudigital.DTO.ProductoResponseDTO;
 import com.softluc.menudigital.modelo.Producto;
 import com.softluc.menudigital.modelo.Usuario;
 import com.softluc.menudigital.repositorio.ProductoRepositorio;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,9 +27,15 @@ public class ProductoServicio implements  IProductoServicio{
 
     @Override
     @Transactional(readOnly = true)
-    public List<Producto> listarTodos() {
+    public List<ProductoResponseDTO> listarTodos() {
         try{
-            return productoRepositorio.findAll();
+
+            List<Producto> productoList = productoRepositorio.findAll();
+            List<ProductoResponseDTO> productoResponseDTOList = new ArrayList<>();
+            for (Producto p: productoList) {
+                productoResponseDTOList.add(new ProductoResponseDTO(p));
+            }
+            return productoResponseDTOList;
         }catch (Exception e){
             throw new RuntimeException("Error al listar los productos");
         }
@@ -35,9 +43,11 @@ public class ProductoServicio implements  IProductoServicio{
 
     @Override
     @Transactional(readOnly = true)
-    public Producto obtenerPorId(Long id) {
+    public ProductoResponseDTO obtenerPorId(Long id) {
         try{
-            return productoRepositorio.findById(id).orElse(null);
+
+            Producto producto = productoRepositorio.findById(id).orElse(null);
+            return new ProductoResponseDTO(producto);
         }catch (Exception e){
             throw new RuntimeException("Error al buscar el producto por id");
         }
@@ -62,7 +72,7 @@ public class ProductoServicio implements  IProductoServicio{
     @Override
     public Producto editar(Long id, ProductoDTO dto) {
         try{
-            Producto producto = this.obtenerPorId(id);
+            Producto producto = productoRepositorio.findById(id).orElse(null);
             producto.setNombre(dto.getNombre());
             producto.setCategoria(categoriaServicio.obtenerPorId(dto.getCategoria()));
             producto.setDescripcion(dto.getDescripcion());
@@ -90,7 +100,7 @@ public class ProductoServicio implements  IProductoServicio{
     @Override
     public Producto actualizarImagenes(Long id, List<String> nuevaListaImg) {
         try{
-            Producto producto = this.obtenerPorId(id);
+            Producto producto = productoRepositorio.findById(id).orElse(null);
             producto.setListaImagenes(nuevaListaImg);
             return productoRepositorio.save(producto);
         }catch (Exception e){
@@ -99,12 +109,33 @@ public class ProductoServicio implements  IProductoServicio{
     }
 
     @Override
-    public List<Producto> obtenerPorUsuario(Long idUser) {
+    public List<ProductoResponseDTO> obtenerPorUsuario(Long idUser) {
         try {
             Usuario usuario = usuarioRepositorio.findById(idUser).orElse(null);
-            return productoRepositorio.findByUsuario(usuario);
+            List<Producto> productoList = productoRepositorio.findByUsuario(usuario);
+            List<ProductoResponseDTO> productoResponseDTOList = new ArrayList<>();
+            for (Producto p: productoList) {
+                productoResponseDTOList.add(new ProductoResponseDTO(p));
+            }
+
+            return productoResponseDTOList;
         }catch (Exception e){
             throw new RuntimeException("Error al obtener los productos por usuario");
+        }
+    }
+
+    public List<ProductoResponseDTO> obtenerPorNombreUsuario(String nameUser) {
+        try{
+            Usuario usuario = usuarioRepositorio.findUsuarioByRazonSocial(nameUser).orElse(null);
+            List<Producto> productoList = productoRepositorio.findByUsuario(usuario);
+            List<ProductoResponseDTO> productoResponseDTOList = new ArrayList<>();
+            for (Producto p: productoList) {
+                productoResponseDTOList.add(new ProductoResponseDTO(p));
+            }
+
+            return productoResponseDTOList;
+        }catch (Exception e){
+            throw new RuntimeException("Error al obtener los productos por nombre de usuario");
         }
     }
 }

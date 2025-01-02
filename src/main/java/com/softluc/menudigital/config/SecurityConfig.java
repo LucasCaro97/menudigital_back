@@ -40,12 +40,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(http ->{
                     //Config los end publicos
                     http.requestMatchers(HttpMethod.GET, "/producto/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/producto/getAllByName/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/categoria").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/images/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/plan").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/provincia").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/localidad/**").permitAll();
-                    http.requestMatchers(HttpMethod.GET, "/usuario/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/usuario/localidad/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/usuario/provincia/**").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
 

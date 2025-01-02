@@ -1,12 +1,11 @@
 package com.softluc.menudigital.servicio;
 
+import com.softluc.menudigital.DTO.LocalidadResponseDTO;
+import com.softluc.menudigital.DTO.UsuarioRequestDTO;
 import com.softluc.menudigital.DTO.UsuarioResponseDTO;
-import com.softluc.menudigital.modelo.Provincia;
 import com.softluc.menudigital.modelo.Usuario;
 import com.softluc.menudigital.repositorio.UsuarioRepositorio;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +18,8 @@ public class UserService implements IUserService {
     private final UsuarioRepositorio usuarioRepositorio;
     private final LocalidadServicio localidadServicio;
     private final ProvinciaServicio provinciaServicio;
+    private final PlanServicio planServicio;
+    private final ImagenServicio imagenServicio;
 
     @Override
     public List<UsuarioResponseDTO> obtenerTodos() {
@@ -30,8 +31,10 @@ public class UserService implements IUserService {
                         u.getRazonSocial(),
                         u.getTelefono(),
                         u.getLogo(),
-                        u.getLocalidad(),
-                        u.getDireccion());
+                        u.getProvincia(),
+                        new LocalidadResponseDTO(u.getLocalidad().getId(), u.getLocalidad().getNombre()),
+                        u.getDireccion(),
+                        u.getPlan());
                 usuarioResponseDTOList.add(dto);
             }
             return usuarioResponseDTOList;
@@ -50,8 +53,10 @@ public class UserService implements IUserService {
                         u.getRazonSocial(),
                         u.getTelefono(),
                         u.getLogo(),
-                        u.getLocalidad(),
-                        u.getDireccion());
+                        u.getProvincia(),
+                        new LocalidadResponseDTO(u.getLocalidad().getId(), u.getLocalidad().getNombre()),
+                        u.getDireccion(),
+                        u.getPlan());
                 usuarioResponseDTOList.add(dto);
             }
             return usuarioResponseDTOList;
@@ -71,13 +76,65 @@ public class UserService implements IUserService {
                         u.getRazonSocial(),
                         u.getTelefono(),
                         u.getLogo(),
-                        u.getLocalidad(),
-                        u.getDireccion());
+                        u.getProvincia(),
+                        new LocalidadResponseDTO(u.getLocalidad().getId(), u.getLocalidad().getNombre()),
+                        u.getDireccion(),
+                        u.getPlan());
                 usuarioResponseDTOList.add(dto);
             }
             return usuarioResponseDTOList;
         }catch (Exception e){
             throw new RuntimeException("Error al obtener usuarios por provincia");
+        }
+    }
+
+    @Override
+    public UsuarioResponseDTO obtenerPorId(Long id) {
+        try{
+            Usuario u = usuarioRepositorio.findById(id).orElse(null);
+            return new UsuarioResponseDTO(u.getId(),
+                    u.getRazonSocial(),
+                    u.getTelefono(),
+                    u.getLogo(),
+                    u.getProvincia(),
+                    new LocalidadResponseDTO(u.getLocalidad().getId(), u.getLocalidad().getNombre()),
+                    u.getDireccion(),
+                    u.getPlan());
+        }catch (Exception e ){
+            throw new RuntimeException("Error al buscar usuario por id");
+        }
+    }
+
+    @Override
+    public UsuarioResponseDTO actualizarPorId(Long id, UsuarioRequestDTO dto) {
+        try{
+            Usuario usuario = usuarioRepositorio.findById(id).orElse(null);
+            if(usuario!=null){
+                usuario.setRazonSocial(dto.getRazonSocial());
+                usuario.setTelefono(Long.parseLong(dto.getTelefono()));
+                usuario.setProvincia(provinciaServicio.obtenerPorId(dto.getIdProvincia()));
+                usuario.setLocalidad(localidadServicio.obtenerPorId(dto.getIdLocalidad()));
+                usuario.setDireccion(dto.getDireccion());
+                usuario.setPlan(planServicio.obtenerPorId(dto.getIdPlan()));
+                if(dto.getImagenPerfil() != null){
+                    String nombreImagenEliminar = usuario.getLogo();
+                    usuario.setLogo(imagenServicio.almacenarImagen(dto.getImagenPerfil()));
+                    if(nombreImagenEliminar != null) imagenServicio.eliminarImagen(nombreImagenEliminar);
+                }
+            }
+            usuarioRepositorio.save(usuario);
+            UsuarioResponseDTO usuarioDTO = new UsuarioResponseDTO(usuario.getId(),
+                    usuario.getRazonSocial(),
+                    usuario.getTelefono(),
+                    usuario.getLogo(),
+                    usuario.getProvincia(),
+                    new LocalidadResponseDTO(usuario.getLocalidad().getId(), usuario.getLocalidad().getNombre()),
+                    usuario.getDireccion(),
+                    usuario.getPlan());
+            return usuarioDTO;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("Error al actualizar el usuario");
         }
     }
 
@@ -88,4 +145,5 @@ public class UserService implements IUserService {
             throw new RuntimeException("Error al buscar por nombre");
         }
     }
+
 }

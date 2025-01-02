@@ -18,6 +18,7 @@ com\softluc\menudigital\controlador\PlanControlador.class
 com\softluc\menudigital\modelo\Localidad.class
 com\softluc\menudigital\DTO\AuthCreateRoleRequest.class
 com\softluc\menudigital\servicio\CategoriaServicio.class
+com\softluc\menudigital\DTO\LocalidadResponseDTO.class
 com\softluc\menudigital\DTO\AuthResponse.class
 com\softluc\menudigital\MenudigitalApplication.class
 com\softluc\menudigital\controlador\AuthController.class
@@ -31,11 +32,13 @@ com\softluc\menudigital\jwt\JwtValidator.class
 com\softluc\menudigital\servicio\IUserService.class
 com\softluc\menudigital\controlador\CategoriaControlador.class
 com\softluc\menudigital\modelo\Producto.class
+com\softluc\menudigital\DTO\UsuarioRequestDTO.class
 com\softluc\menudigital\controlador\ProvinciaControlador.class
 com\softluc\menudigital\modelo\Localidad$LocalidadBuilder.class
 com\softluc\menudigital\modelo\Plan$PlanBuilder.class
 com\softluc\menudigital\servicio\ProductoServicio.class
 com\softluc\menudigital\jwt\JwtUtils.class
+com\softluc\menudigital\DTO\ProductoResponseDTO.class
 com\softluc\menudigital\servicio\UserService.class
 com\softluc\menudigital\servicio\LocalidadServicio.class
 com\softluc\menudigital\repositorio\ProductoRepositorio.class

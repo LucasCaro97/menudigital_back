@@ -1,6 +1,7 @@
 package com.softluc.menudigital.DTO;
 
 import com.softluc.menudigital.modelo.Localidad;
+import com.softluc.menudigital.modelo.Plan;
 import com.softluc.menudigital.modelo.Provincia;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,10 @@ public class UsuarioResponseDTO {
     private String razonSocial;
     private Long telefono;
     private String logo;
-    private Localidad localidad;
+    private Provincia provincia;
+    private LocalidadResponseDTO localidad;
     private String direccion;
+    private Plan plan;
+
 
 }

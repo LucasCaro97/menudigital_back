@@ -1,6 +1,7 @@
 package com.softluc.menudigital.controlador;
 
 import com.softluc.menudigital.DTO.ProductoDTO;
+import com.softluc.menudigital.DTO.ProductoResponseDTO;
 import com.softluc.menudigital.modelo.Producto;
 import com.softluc.menudigital.servicio.ImagenServicio;
 import com.softluc.menudigital.servicio.ProductoServicio;
@@ -26,7 +27,7 @@ public class ProductoControlador {
     @GetMapping
     public ResponseEntity<?> getAll(){
         try{
-            List<Producto> productoLista = productoServicio.listarTodos();
+            List<ProductoResponseDTO> productoLista = productoServicio.listarTodos();
             return ResponseEntity.ok(productoLista);
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
@@ -36,7 +37,7 @@ public class ProductoControlador {
     @GetMapping("/{id}")
     public  ResponseEntity<?> getById(@PathVariable Long id){
         try{
-            Producto producto = productoServicio.obtenerPorId(id);
+            ProductoResponseDTO producto = productoServicio.obtenerPorId(id);
             if(producto!=null) return ResponseEntity.ok(producto);
             else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe un producto con el id proporcionado");
         }catch (Exception e){
@@ -88,7 +89,7 @@ public class ProductoControlador {
     @DeleteMapping("/{id}/deleteImage/{nameImg}")
     public ResponseEntity<?> deleteImageByName(@PathVariable Long id, @PathVariable String nameImg){
         try{
-            Producto producto = productoServicio.obtenerPorId(id);
+            ProductoResponseDTO producto = productoServicio.obtenerPorId(id);
             List<String> nuevaListaImg = producto.getListaImagenes().stream().filter(item -> !item.equals(nameImg)).collect(Collectors.toList());
             productoServicio.actualizarImagenes(producto.getId(), nuevaListaImg);
             imagenServicio.eliminarImagen(nameImg);
@@ -103,9 +104,20 @@ public class ProductoControlador {
     @GetMapping("/getAll/{idUser}")
     public ResponseEntity<?> getAllByUser(@PathVariable Long idUser){
         try{
-            List<Producto> productoList = productoServicio.obtenerPorUsuario(idUser);
+            List<ProductoResponseDTO> productoList = productoServicio.obtenerPorUsuario(idUser);
             return ResponseEntity.ok(productoList);
         }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAllByName/{nameUser}")
+    public ResponseEntity<?> getAllByUser(@PathVariable String nameUser){
+        try{
+            List<ProductoResponseDTO> productoList = productoServicio.obtenerPorNombreUsuario(nameUser);
+            return ResponseEntity.ok(productoList);
+        }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
