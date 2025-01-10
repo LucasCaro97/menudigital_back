@@ -2,6 +2,7 @@ package com.softluc.menudigital.controlador;
 
 import com.softluc.menudigital.DTO.ProductoDTO;
 import com.softluc.menudigital.DTO.ProductoResponseDTO;
+import com.softluc.menudigital.Excepciones.LimitePlatosExcepcion;
 import com.softluc.menudigital.modelo.Producto;
 import com.softluc.menudigital.servicio.ImagenServicio;
 import com.softluc.menudigital.servicio.ProductoServicio;
@@ -53,12 +54,8 @@ public class ProductoControlador {
                                     @RequestParam("precio") BigDecimal precio,
                                     @RequestParam(value = "imagen", required = false) MultipartFile[] listaImagenes,
                                     @RequestParam("idUsuario") Long idUsuario){
-        try{
-            Producto producto = productoServicio.crear(new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes, idUsuario));
-            return ResponseEntity.ok(producto);
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
+        Producto producto = productoServicio.crear(new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes, idUsuario));
+        return ResponseEntity.ok(producto);
     }
 
     @PutMapping("/{id}")

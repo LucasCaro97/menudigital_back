@@ -12,6 +12,7 @@ C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\A
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\AuthLoginRequst.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\AuthResponse.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\CategoriaDTO.java
+C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\ErrorResponse.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\LocalidadDTO.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\LocalidadResponseDTO.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\ProductoDTO.java
@@ -19,6 +20,11 @@ C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\P
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\ProvinciaDTO.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\UsuarioRequestDTO.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\DTO\UsuarioResponseDTO.java
+C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\Excepciones\CategoriaNoEncontradaExcepcion.java
+C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\Excepciones\GlobalExceptionHandler.java
+C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\Excepciones\LimitePlatosExcepcion.java
+C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\Excepciones\ProductoNoEncontradoExcepcion.java
+C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\Excepciones\UsuarioNoEncontradoExcepcion.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\jwt\JwtUtils.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\jwt\JwtValidator.java
 C:\Users\54375\Downloads\menudigital\src\main\java\com\softluc\menudigital\MenudigitalApplication.java

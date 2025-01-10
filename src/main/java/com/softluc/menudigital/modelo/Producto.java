@@ -7,6 +7,13 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.List;
 
+
+/**
+ * Entidad que representa un producto en el sistema
+ *
+ * <p>Incluye informacion como nombre, categoria, descripcion, precio, lista de imagenes y usuario propietario. <p/>
+ * Utiliza JPA para mapear las relaciones con la base de datos.
+ */
 @Entity
 @Data
 public class Producto {
