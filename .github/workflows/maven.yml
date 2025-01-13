@@ -19,6 +19,23 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      db:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: menudigital
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -u testuser -ptestpassword"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -28,6 +45,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      env:
+        MYSQL_HOST: localhost
+        MYSQL_PORT: 3306
+        MYSQL_USER: root
+        MYSQL_PASSWORD: root
+        rutaimagenes: /opt
+        usuarioroot: admin
+        usuariopass: adminpass
       run: mvn clean install
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
