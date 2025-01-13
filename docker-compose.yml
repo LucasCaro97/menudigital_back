@@ -1,12 +1,28 @@
-on:
-  [workflow_dispatch]
+version: '3.8'
 
-jobs:
-  publish_images:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v4
-    - name: build image
-      run: docker build . -t lucascarodev/menudigital-backend:latest
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: ${MYSQL_PORT:-3306}
+      MYSQL_USER: ${MYSQL_USER:-root}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
+      rutaimagenes: ${rutaimagenes:-/opt}
+      usuarioroot: ${usuarioroot:-admin}
+      usuariopass: ${usuariopass:-adminpass}
+      depends_on:
+        -db
 
+  db:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-root}
+      MYSQL_DATABASE: menudigital
+    ports:
+      - "3306:3306"
