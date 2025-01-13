@@ -15,8 +15,9 @@ services:
       rutaimagenes: ${rutaimagenes:-/opt}
       usuarioroot: ${usuarioroot:-admin}
       usuariopass: ${usuariopass:-adminpass}
-      depends_on:
-        -db
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: mysql:8.0
@@ -26,3 +27,9 @@ services:
       MYSQL_DATABASE: menudigital
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
