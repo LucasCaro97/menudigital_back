@@ -1,36 +1,47 @@
 version: '3.8'
 
 services:
-  app:
+  db_container:
+    image: mysql:8.0.33
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: menudigital
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}" ]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db_container
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "8081:80"
+    depends_on:
+      - db_container
+
+  api:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
-      MYSQL_HOST: db
-      MYSQL_PORT: ${MYSQL_PORT:-3306}
-      MYSQL_USER: ${MYSQL_USER:-root}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
-      rutaimagenes: ${rutaimagenes:-/opt}
-      usuarioroot: ${usuarioroot:-admin}
-      usuariopass: ${usuariopass:-admin}
+      DB_URL: ${DB_URL}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      rutaimagenes: ${rutaimagenes}
+      usuarioroot: ${usuarioroot}
+      usuariopass: ${usuariopass}
     depends_on:
-      db:
+      db_container:
         condition: service_healthy
 
-  db:
-    image: mysql:8.0.33
-    container_name: mysql-container
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-root}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
-      MYSQL_DATABASE: menudigital
-    ports:
-      - "3307:3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
-      interval: 10s
-      retries: 5
-      start_period: 5s
-      timeout: 5s
+
+
