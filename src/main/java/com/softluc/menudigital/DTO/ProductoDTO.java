@@ -20,6 +20,7 @@ public class ProductoDTO {
     @ElementCollection
     private MultipartFile[] listaImagenes;
     private Long idUsuario;
+    private boolean disponible;
 
 
 }

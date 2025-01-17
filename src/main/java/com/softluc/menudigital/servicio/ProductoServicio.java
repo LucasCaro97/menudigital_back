@@ -99,6 +99,7 @@ public class ProductoServicio implements  IProductoServicio{
             producto.setPrecio(dto.getPrecio());
             producto.setListaImagenes(imagenServicio.almacenarImagenes(dto.getListaImagenes()));
             producto.setUsuario(usuario);
+            producto.setDisponible(true);
             return productoRepositorio.save(producto);
     }
 
@@ -118,6 +119,7 @@ public class ProductoServicio implements  IProductoServicio{
             producto.setPrecio(dto.getPrecio());
             producto.setListaImagenes(imagenServicio.almacenarImagenes(dto.getListaImagenes(), producto.getListaImagenes()));
             producto.setUsuario(usuario);
+            producto.setDisponible(dto.isDisponible());
             return productoRepositorio.save(producto);
     }
 

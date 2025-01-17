@@ -53,8 +53,9 @@ public class ProductoControlador {
                                     @RequestParam("descripcion") String descripcion,
                                     @RequestParam("precio") BigDecimal precio,
                                     @RequestParam(value = "imagen", required = false) MultipartFile[] listaImagenes,
-                                    @RequestParam("idUsuario") Long idUsuario){
-        Producto producto = productoServicio.crear(new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes, idUsuario));
+                                    @RequestParam("idUsuario") Long idUsuario,
+                                    @RequestParam("disponible") Boolean disponible){
+        Producto producto = productoServicio.crear(new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes, idUsuario, disponible));
         return ResponseEntity.ok(producto);
     }
 
@@ -64,13 +65,10 @@ public class ProductoControlador {
                                     @RequestParam("descripcion") String descripcion,
                                     @RequestParam("precio") BigDecimal precio,
                                     @RequestParam(value = "imagen", required = false) MultipartFile[] listaImagenes,
-                                    @RequestParam("idUsuario") Long idUsuario){
-        try{
-            Producto producto = productoServicio.editar(id, new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes, idUsuario));
+                                    @RequestParam("idUsuario") Long idUsuario,
+                                    @RequestParam("disponible") Boolean disponible){
+            Producto producto = productoServicio.editar(id, new ProductoDTO(nombre, categoria, descripcion, precio, listaImagenes, idUsuario, disponible));
             return ResponseEntity.ok(producto);
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
     }
 
     @DeleteMapping("/{id}")

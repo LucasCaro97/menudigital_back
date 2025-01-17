@@ -33,5 +33,6 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
+    private Boolean disponible;
 
 }

@@ -24,7 +24,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    // Manejar excepciones específicas (por ejemplo, LimiteProductosAlcanzadoException)
     @ExceptionHandler(UsuarioNoEncontradoExcepcion.class)
     public ResponseEntity<ErrorResponse> handleUsuarioNoEncontradoExcepcion(UsuarioNoEncontradoExcepcion ex){
         // Crea una respuesta estructurada con el código y el mensaje del error
@@ -32,7 +31,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    // Manejar otras excepciones generales
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
         // Crea una respuesta genérica para cualquier otra excepción no específica
