@@ -94,19 +94,22 @@ public class MenudigitalApplication {
 				Plan plan1 = Plan.builder()
 						.nombre("Plan Gratuito")
 						.descripcion("Este plan es ideal para pequeños negocios o quienes deseen iniciarse en la digitalización de sus productos. Podrás crear y personalizar hasta 10 productos con imágenes y descripciones, permitiendo a tus clientes explorar tu oferta de manera rápida y sencilla desde cualquier dispositivo. ¡Empieza a mostrar lo mejor de tu negocio sin compromisos!")
-						.cantidadProductos(10)
+						.cantidadProductos(5)
+						.precio(0D)
 						.build();
 
 				Plan plan2 = Plan.builder()
 						.nombre("Plan Intemedio")
 						.descripcion("Con el Plan Intermedio, obtienes más capacidad para mostrar tu oferta. Este plan te permite crear hasta 30 productos con imágenes, descripciones y detalles, ideal para negocios en crecimiento que buscan una presencia digital sólida. Mantén a tus clientes informados y mejora su experiencia mostrando una mayor variedad de opciones.")
 						.cantidadProductos(30)
+						.precio(25000D)
 						.build();
 
 				Plan plan3 = Plan.builder()
 						.nombre("Plan Ilimitado")
 						.descripcion("Nuestro Plan Ilimitado está diseñado para los negocios que desean aprovechar todo el potencial de la digitalización sin restricciones. Podras adaptar y actualizar tu menú a medida que lo necesites. Ofrece a tus clientes una experiencia completa y profesional con un menú que refleja toda la amplitud de tu oferta.")
 						.cantidadProductos(100)
+						.precio(40000D)
 						.build();
 
 				planRepositorio.saveAll(List.of(plan1, plan2, plan3));
