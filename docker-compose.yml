@@ -43,6 +43,8 @@ services:
       rutaimagenes: ${rutaimagenes}
       usuarioroot: ${usuarioroot}
       usuariopass: ${usuariopass}
+    env_file:
+      - .env
     networks:
       - menudigital_network
     depends_on:
