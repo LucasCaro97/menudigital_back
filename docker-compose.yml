@@ -9,6 +9,8 @@ services:
       MYSQL_DATABASE: menudigital
     ports:
       - "3308:3306"
+    networks:
+      - menudigital_network
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}" ]
       interval: 10s
@@ -23,6 +25,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "8091:80"
+    networks:
+      - menudigital_network
     depends_on:
       - db_container
 
@@ -39,6 +43,13 @@ services:
       rutaimagenes: ${rutaimagenes}
       usuarioroot: ${usuarioroot}
       usuariopass: ${usuariopass}
+    networks:
+      - menudigital_network
     depends_on:
       db_container:
         condition: service_healthy
+
+networks:
+  menudigital_network:
+    name: menudigital_network
+    driver: bridge
