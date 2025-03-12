@@ -21,9 +21,11 @@ public class PlanControlador {
     @GetMapping()
     public ResponseEntity<?> getAll(){
         try{
+            System.out.println("Ingrese al controlador");
             List<Plan> planList = planServicio.listarTodos();
             return ResponseEntity.ok(planList);
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
