@@ -54,7 +54,6 @@ public class SecurityConfig {
                     //Config los end priv
                     http.anyRequest().authenticated();
                 })
-                .cors( cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
@@ -64,7 +63,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://frontend_app:3000", "http://localhost:3000"));
+        corsConfiguration.setAllowedOrigins(List.of("*"));
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setAllowCredentials(true);

@@ -14,6 +14,7 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/localidad")
+@CrossOrigin(origins = "*")
 public class LocalidadControlador {
 
     private final LocalidadServicio localidadServicio;
