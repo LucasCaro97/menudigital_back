@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/plan")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class PlanControlador {
 
     private final PlanServicio planServicio;

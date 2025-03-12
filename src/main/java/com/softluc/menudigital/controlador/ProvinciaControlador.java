@@ -12,7 +12,6 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/provincia")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class ProvinciaControlador {
 
     private final ProvinciaServicio provinciaServicio;

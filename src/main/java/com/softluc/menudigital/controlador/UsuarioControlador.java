@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/usuario")
-@CrossOrigin(origins = "*")
 public class UsuarioControlador {
 
     private final UserService userService;
