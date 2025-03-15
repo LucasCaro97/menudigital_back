@@ -84,7 +84,7 @@ public class ProductoServicio implements  IProductoServicio{
             //Obtengo el usuario de la BD
             Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElse(null);
             //Obtengo la cantidad de productos del usuario
-            Integer cantidadProductos = productoRepositorio.findByUsuario(usuario).size();
+            int cantidadProductos = productoRepositorio.findByUsuario(usuario).size();
             //Obtengo la categoria
             Categoria categoria = categoriaServicio.obtenerPorId(dto.getCategoria());
 

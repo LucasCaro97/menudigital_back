@@ -51,7 +51,6 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.GET, "/usuario/provincia/**").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
-
                     //Config los end priv
                     http.anyRequest().authenticated();
                 })
