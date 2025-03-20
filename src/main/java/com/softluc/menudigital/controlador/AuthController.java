@@ -32,9 +32,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid AuthCreateUserRequest authCreateUser){
         try{
-            System.out.println(authCreateUser);
             return new ResponseEntity<>(this.userDetailServiceImp.createUser(authCreateUser), HttpStatus.CREATED);
         }catch (IllegalArgumentException e){
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

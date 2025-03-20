@@ -115,6 +115,7 @@ public class UserDetailServiceImp implements UserDetailsService {
         if(rolesSet.isEmpty()){
             throw new IllegalArgumentException("Los roles especificados no existen");
         }
+
         Usuario usuario = Usuario.builder()
                 .nombre(username)
                 .password(passwordEncoder.encode(password))

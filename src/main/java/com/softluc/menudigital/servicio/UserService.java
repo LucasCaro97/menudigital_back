@@ -27,18 +27,18 @@ public class UserService implements IUserService {
             List<Usuario> usuarioList = usuarioRepositorio.findAll();
             List<UsuarioResponseDTO> usuarioResponseDTOList = new ArrayList<>();
             for (Usuario u: usuarioList) {
-                if(u.getNombre().equals("admin")) break;
-                else{
-                    UsuarioResponseDTO dto = new UsuarioResponseDTO(u.getId(),
-                            u.getRazonSocial(),
-                            u.getTelefono(),
-                            u.getLogo(),
-                            u.getProvincia(),
-                            new LocalidadResponseDTO(u.getLocalidad().getId(), u.getLocalidad().getNombre()),
-                            u.getDireccion(),
-                            u.getPlan());
-                    usuarioResponseDTOList.add(dto);
+                if(u.getNombre().equals("admin")) {
+                    continue;
                 }
+                UsuarioResponseDTO dto = new UsuarioResponseDTO(u.getId(),
+                    u.getRazonSocial(),
+                    u.getTelefono(),
+                    u.getLogo(),
+                    u.getProvincia(),
+                    new LocalidadResponseDTO(u.getLocalidad().getId(), u.getLocalidad().getNombre()),
+                    u.getDireccion(),
+                    u.getPlan());
+                usuarioResponseDTOList.add(dto);
             }
             return usuarioResponseDTOList;
         }catch (Exception e){
