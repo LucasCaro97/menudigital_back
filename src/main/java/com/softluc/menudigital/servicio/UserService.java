@@ -27,7 +27,7 @@ public class UserService implements IUserService {
             List<Usuario> usuarioList = usuarioRepositorio.findAll();
             List<UsuarioResponseDTO> usuarioResponseDTOList = new ArrayList<>();
             for (Usuario u: usuarioList) {
-                if(u.getNombre().equals("admin")) {
+                if(u.getNombre().equals("administrador")) {
                     continue;
                 }
                 UsuarioResponseDTO dto = new UsuarioResponseDTO(u.getId(),
@@ -52,7 +52,7 @@ public class UserService implements IUserService {
             List<Usuario> usuarioList = usuarioRepositorio.findByLocalidad(localidadServicio.obtenerPorId(idLocalidad));
             List<UsuarioResponseDTO> usuarioResponseDTOList = new ArrayList<>();
             for (Usuario u: usuarioList) {
-                if(u.getNombre().equals("admin")) break;
+                if(u.getNombre().equals("administrador")) break;
                 UsuarioResponseDTO dto = new UsuarioResponseDTO(u.getId(),
                         u.getRazonSocial(),
                         u.getTelefono(),
@@ -76,7 +76,7 @@ public class UserService implements IUserService {
             List<Usuario> usuarioList = usuarioRepositorio.findByProvincia(provinciaServicio.obtenerPorId(idProvincia));
             List<UsuarioResponseDTO> usuarioResponseDTOList = new ArrayList<>();
             for (Usuario u: usuarioList) {
-                if(u.getNombre().equals("admin")) break;
+                if(u.getNombre().equals("administrador")) break;
                 UsuarioResponseDTO dto = new UsuarioResponseDTO(u.getId(),
                         u.getRazonSocial(),
                         u.getTelefono(),
@@ -97,7 +97,7 @@ public class UserService implements IUserService {
     public UsuarioResponseDTO obtenerPorId(Long id) {
         try{
             Usuario u = usuarioRepositorio.findById(id).orElse(null);
-            if(u.getNombre().equals("admin")) return null;
+            if(u.getNombre().equals("administrador")) return null;
             return new UsuarioResponseDTO(u.getId(),
                     u.getRazonSocial(),
                     u.getTelefono(),
