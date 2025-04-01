@@ -58,8 +58,7 @@ services:
 
 networks:
   menudigital_network:
-    name: menudigital_network
-    driver: bridge
+    external: true
 
 volumes:
   img_volume:
