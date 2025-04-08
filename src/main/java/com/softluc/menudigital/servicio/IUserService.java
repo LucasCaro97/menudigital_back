@@ -15,5 +15,6 @@ public interface IUserService {
      UsuarioResponseDTO obtenerPorId(Long id);
 
      UsuarioResponseDTO actualizarPorId(Long id, UsuarioRequestDTO dto);
+     UsuarioResponseDTO obtenerPorRazonSocial(String razonSocial);
 
 }

@@ -3,6 +3,7 @@ package com.softluc.menudigital.servicio;
 import com.softluc.menudigital.DTO.LocalidadResponseDTO;
 import com.softluc.menudigital.DTO.UsuarioRequestDTO;
 import com.softluc.menudigital.DTO.UsuarioResponseDTO;
+import com.softluc.menudigital.Excepciones.UsuarioNoEncontradoExcepcion;
 import com.softluc.menudigital.modelo.Usuario;
 import com.softluc.menudigital.repositorio.UsuarioRepositorio;
 import lombok.RequiredArgsConstructor;
@@ -142,6 +143,23 @@ public class UserService implements IUserService {
             e.printStackTrace();
             throw new RuntimeException("Error al actualizar el usuario");
         }
+    }
+
+    @Override
+    public UsuarioResponseDTO obtenerPorRazonSocial(String razonSocial) {
+        Usuario usuario = usuarioRepositorio.findUsuarioByRazonSocial(razonSocial).orElse(null);
+        if (usuario == null) throw new UsuarioNoEncontradoExcepcion("El usuario no existe");
+
+        UsuarioResponseDTO dto = new UsuarioResponseDTO(usuario.getId(),
+                usuario.getRazonSocial(),
+                usuario.getTelefono(),
+                usuario.getLogo(),
+                usuario.getProvincia(),
+                new LocalidadResponseDTO(usuario.getLocalidad().getId(), usuario.getLocalidad().getNombre()),
+                usuario.getDireccion(),
+                usuario.getPlan());
+
+        return dto;
     }
 
     public Usuario obtenerPorNombre(String nombre){

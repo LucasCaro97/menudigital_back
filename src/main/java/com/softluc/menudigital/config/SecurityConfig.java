@@ -49,6 +49,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.GET, "/localidad/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/usuario/localidad/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/usuario/provincia/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/usuario/razonSocial").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
                     //Config los end priv

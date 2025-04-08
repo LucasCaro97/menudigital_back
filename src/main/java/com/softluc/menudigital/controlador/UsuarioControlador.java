@@ -71,4 +71,15 @@ public class UsuarioControlador {
         }
     }
 
+    @GetMapping("/razonSocial")
+    ResponseEntity<?> obtenerPorRazonSocial(@RequestParam String razonSocial){
+        try{
+            UsuarioResponseDTO dto = userService.obtenerPorRazonSocial(razonSocial);
+            return ResponseEntity.ok(dto);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
 }
